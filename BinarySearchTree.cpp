@@ -78,6 +78,7 @@ public:
 			if (ref->GetRightNode() != nullptr)
 				if (ref->GetRightNode()->GetParent() != ref)
 					cout << "\nERROR: Parent mismatch!\n";
+
 			cout << ref->GetData() << ", ";
 			display(ref->GetLeftNode());
 			display(ref->GetRightNode());
@@ -93,12 +94,32 @@ public:
 			head = ref;
 		}
 
-		parent->SetRightNode(ref->GetLeftNode());
+
+		parent->SetRightNode(child);
 		ref->SetLeftNode(parent);
 
 		ref->SetParent(parent->GetParent());
 		parent->SetParent(ref);
 		child->SetParent(parent);
+	}
+
+	void shiftRight(Node* ref)
+	{
+		Node* parent = ref->GetParent();
+		Node* child = ref->GetRightNode();
+
+		if (parent == head)
+		{
+			head == ref;
+		}
+
+		parent->SetLeftNode(child);
+		ref->SetRightNode(parent);
+
+		ref->SetParent(parent->GetParent());
+		parent->SetParent(ref);
+		child->SetParent(parent);
+
 	}
 
 };
@@ -114,5 +135,8 @@ int main()
 	tree.display(tree.GetHead());
 	cout << "\n";
 	tree.shiftLeft(tree.GetHead()->GetRightNode());
+	tree.display(tree.GetHead());
+	cout << "\n";
+	tree.shiftRight(tree.GetHead()->GetLeftNode());
 	tree.display(tree.GetHead());
 }
