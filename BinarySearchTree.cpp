@@ -72,6 +72,12 @@ public:
 	{
 		if (ref != nullptr)
 		{
+			if (ref->GetLeftNode() != nullptr)
+				if (ref->GetLeftNode()->GetParent() != ref)
+					cout << "\nERROR: Parent mismatch!\n";
+			if (ref->GetRightNode() != nullptr)
+				if (ref->GetRightNode()->GetParent() != ref)
+					cout << "\nERROR: Parent mismatch!\n";
 			cout << ref->GetData() << ", ";
 			display(ref->GetLeftNode());
 			display(ref->GetRightNode());
