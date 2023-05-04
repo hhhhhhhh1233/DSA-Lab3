@@ -86,6 +86,10 @@ public:
 	}
 	void shiftLeft(Node* ref)
 	{
+		if (head == ref)
+		{
+			return;
+		}
 		Node* parent = ref->GetParent();
 		Node* child = ref->GetLeftNode();
 		
@@ -105,12 +109,16 @@ public:
 
 	void shiftRight(Node* ref)
 	{
+		if (head == ref)
+		{
+			return;
+		}
 		Node* parent = ref->GetParent();
 		Node* child = ref->GetRightNode();
 
 		if (parent == head)
 		{
-			head == ref;
+			head = ref;
 		}
 
 		parent->SetLeftNode(child);
@@ -127,16 +135,18 @@ public:
 int main()
 {
 	BinarySearchTree tree;
+	
 	tree.insert(2);
 	tree.insert(5);
 	tree.insert(1);
 	tree.insert(4);
 	tree.insert(0);
-	tree.display(tree.GetHead());
-	cout << "\n";
+	
+	tree.display(tree.GetHead()); cout << "\n";
+
 	tree.shiftLeft(tree.GetHead()->GetRightNode());
-	tree.display(tree.GetHead());
-	cout << "\n";
+	tree.display(tree.GetHead()); cout << "\n";
+	
 	tree.shiftRight(tree.GetHead()->GetLeftNode());
 	tree.display(tree.GetHead());
 }
