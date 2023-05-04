@@ -11,7 +11,7 @@ int main()
 	{
 		tree.Insert(i);
 	}
-	
+
 	tree.Display(tree.GetRoot()); cout << "\n";
 
 	tree.ShiftLeft(tree.GetRoot()->GetRightNode());

@@ -35,6 +35,11 @@ void BinarySearchTree::Insert(int data)
 		{
 			ref = ref->GetLeftNode();
 		}
+		else
+		{
+			cout << "\nWARNING: Key " << data << " already exists in tree!\n";
+			return;
+		}
 	} while (ref != nullptr);
 	if (data > refParent->GetData())
 	{
@@ -71,7 +76,7 @@ void BinarySearchTree::Display(Node* ref)
 			if (ref->GetRightNode()->GetParent() != ref)
 				cout << "\nERROR: Parent mismatch!\n";
 
-		cout << ref->GetData() << " at depth " << ref->GetDepth() << " with size " << ref->GetSize() << ", \n";
+		cout << "Key " << ref->GetData() << " at depth " << ref->GetDepth() << " with size " << ref->GetSize() << ", \n";
 		Display(ref->GetLeftNode());
 		Display(ref->GetRightNode());
 	}
