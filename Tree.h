@@ -5,6 +5,7 @@ class Node
 private:
 	int data;
 	int depth;
+	int size;
 	Node* left;
 	Node* right;
 	Node* parent;
@@ -16,7 +17,10 @@ public:
 		right = nullptr;
 		parent = nullptr;
 		depth = 0;
+		size = 1;
 	}
+	int GetSize() { return size; }
+	void SetSize(int newSize) { size = newSize; }
 	int GetData() { return data; }
 	void SetData(int val) { data = val; }
 	int GetDepth() { return depth; }
@@ -33,9 +37,7 @@ class BinarySearchTree
 {
 private:
 	Node* root;
-	int size;
 public:
-	int GetSize() { return size; }
 	Node* GetRoot() { return root; }
 	BinarySearchTree();
 	~BinarySearchTree();
@@ -45,4 +47,5 @@ public:
 	void ShiftLeft(Node* ref);
 	void ShiftRight(Node* ref);
 	void CalculateDepth(Node* ref);
+	void CalculateSize(Node* ref);
 };

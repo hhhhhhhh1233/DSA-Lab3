@@ -6,7 +6,6 @@ using std::cout;
 BinarySearchTree::BinarySearchTree()
 {
 	root = nullptr;
-	size = 0;
 }
 
 BinarySearchTree::~BinarySearchTree()
@@ -19,7 +18,6 @@ void BinarySearchTree::Insert(int data)
 	if (root == nullptr)
 	{
 		root = new Node(data);
-		size = 1;
 		return;
 	}
 
@@ -27,6 +25,7 @@ void BinarySearchTree::Insert(int data)
 	Node* refParent;
 	do
 	{
+		ref->SetSize(ref->GetSize() + 1);
 		refParent = ref;
 		if (data > ref->GetData())
 		{
@@ -47,7 +46,6 @@ void BinarySearchTree::Insert(int data)
 		refParent->SetLeftNode(new Node(data));
 		refParent->GetLeftNode()->SetParent(refParent);
 	}
-	size++;
 }
 
 void BinarySearchTree::DeleteTree(Node* ref)
@@ -63,6 +61,7 @@ void BinarySearchTree::DeleteTree(Node* ref)
 void BinarySearchTree::Display(Node* ref)
 {
 	CalculateDepth(root);
+	CalculateSize(root);
 	if (ref != nullptr)
 	{
 		if (ref->GetLeftNode() != nullptr)
@@ -72,7 +71,7 @@ void BinarySearchTree::Display(Node* ref)
 			if (ref->GetRightNode()->GetParent() != ref)
 				cout << "\nERROR: Parent mismatch!\n";
 
-		cout << ref->GetData() << " at depth " << ref->GetDepth() << ", ";
+		cout << ref->GetData() << " at depth " << ref->GetDepth() << " with size " << ref->GetSize() << ", \n";
 		Display(ref->GetLeftNode());
 		Display(ref->GetRightNode());
 	}
@@ -169,6 +168,33 @@ void BinarySearchTree::CalculateDepth(Node* ref)
 				ref->SetDepth(ref->GetLeftNode()->GetDepth() + 1);
 			else
 				ref->SetDepth(ref->GetRightNode()->GetDepth() + 1);
+		}
+	}
+}
+
+void BinarySearchTree::CalculateSize(Node* ref)
+{
+	if (ref != nullptr)
+	{
+		if (ref->GetLeftNode() == nullptr && ref->GetRightNode() == nullptr)
+		{
+			ref->SetSize(1);
+		}
+		else if (ref->GetLeftNode() == nullptr)
+		{
+			CalculateSize(ref->GetRightNode());
+			ref->SetSize(ref->GetRightNode()->GetSize() + 1);
+		}
+		else if (ref->GetRightNode() == nullptr)
+		{
+			CalculateSize(ref->GetLeftNode());
+			ref->SetSize(ref->GetLeftNode()->GetSize() + 1);
+		}
+		else
+		{
+			CalculateSize(ref->GetLeftNode());
+			CalculateSize(ref->GetRightNode());
+			ref->SetSize(ref->GetLeftNode()->GetSize() + ref->GetRightNode()->GetSize() + 1);
 		}
 	}
 }
