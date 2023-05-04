@@ -7,18 +7,18 @@ int main()
 {
 	BinarySearchTree tree;
 	
-	tree.Insert(2);
-	tree.Insert(5);
-	tree.Insert(0);
-	tree.Insert(4);
-	tree.Insert(-1);
-	tree.Insert(1);
+	for (int i = 0; i < 7; i++)
+	{
+		tree.Insert(i);
+	}
 	
 	tree.Display(tree.GetRoot()); cout << "\n";
 
-	//tree.shiftLeft(tree.GetHead()->GetRightNode());
-	//tree.display(tree.GetHead()); cout << "\n";
-	
+	tree.ShiftLeft(tree.GetRoot()->GetRightNode());
+	tree.ShiftLeft(tree.GetRoot()->GetRightNode());
+	tree.ShiftLeft(tree.GetRoot()->GetRightNode());
 	tree.ShiftRight(tree.GetRoot()->GetLeftNode()->GetLeftNode());
+	tree.ShiftLeft(tree.GetRoot()->GetRightNode()->GetRightNode());
+	
 	tree.Display(tree.GetRoot()); cout << "\n";
 }

@@ -62,6 +62,8 @@ void BinarySearchTree::DeleteTree(Node* ref)
 
 void BinarySearchTree::Display(Node* ref)
 {
+	CalculateDepth(root);
+	CalculateSize(root);
 	if (ref != nullptr)
 	{
 		if (ref->GetLeftNode() != nullptr)
@@ -108,8 +110,16 @@ void BinarySearchTree::ShiftLeft(Node* ref)
 	parent->SetParent(ref);
 	if (child != nullptr)
 		child->SetParent(parent);
-	CalculateDepth(grandParent);
-	CalculateSize(grandParent);
+	if (grandParent != nullptr)
+	{
+		CalculateDepth(grandParent);
+		CalculateSize(grandParent);
+	}
+	else
+	{
+		CalculateDepth(parent);
+		CalculateSize(parent);
+	}
 }
 
 void BinarySearchTree::ShiftRight(Node* ref)
