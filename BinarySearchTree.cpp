@@ -90,9 +90,19 @@ public:
 		{
 			return;
 		}
+		
 		Node* parent = ref->GetParent();
 		Node* child = ref->GetLeftNode();
-		
+		Node* grandParent = parent->GetParent();
+
+		if (grandParent != nullptr)
+		{
+			if (grandParent->GetLeftNode() == parent)
+				grandParent->SetLeftNode(ref);
+			if (grandParent->GetRightNode() == parent)
+				grandParent->SetRightNode(ref);
+		}
+
 		if (parent == head)
 		{
 			head = ref;
@@ -113,8 +123,19 @@ public:
 		{
 			return;
 		}
+
+
 		Node* parent = ref->GetParent();
 		Node* child = ref->GetRightNode();
+		Node* grandParent = parent->GetParent();
+		
+		if (grandParent != nullptr)
+		{
+			if (grandParent->GetLeftNode() == parent)
+				grandParent->SetLeftNode(ref);
+			if (grandParent->GetRightNode() == parent)
+				grandParent->SetRightNode(ref);
+		}
 
 		if (parent == head)
 		{
@@ -126,7 +147,8 @@ public:
 
 		ref->SetParent(parent->GetParent());
 		parent->SetParent(ref);
-		child->SetParent(parent);
+		if (child != nullptr)
+			child->SetParent(parent);
 
 	}
 
@@ -144,9 +166,9 @@ int main()
 	
 	tree.display(tree.GetHead()); cout << "\n";
 
-	tree.shiftLeft(tree.GetHead()->GetRightNode());
-	tree.display(tree.GetHead()); cout << "\n";
+	//tree.shiftLeft(tree.GetHead()->GetRightNode());
+	//tree.display(tree.GetHead()); cout << "\n";
 	
-	tree.shiftRight(tree.GetHead()->GetLeftNode());
+	tree.shiftRight(tree.GetHead()->GetLeftNode()->GetLeftNode());
 	tree.display(tree.GetHead());
 }
