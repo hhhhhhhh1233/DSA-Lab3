@@ -14,11 +14,11 @@ int main()
 	tree.Insert(-1);
 	tree.Insert(1);
 	
-	tree.Display(tree.GetHead()); cout << "\n";
+	tree.Display(tree.GetRoot()); cout << "\n";
 
 	//tree.shiftLeft(tree.GetHead()->GetRightNode());
 	//tree.display(tree.GetHead()); cout << "\n";
 	
-	tree.ShiftRight(tree.GetHead()->GetLeftNode()->GetLeftNode());
-	tree.Display(tree.GetHead());
+	tree.ShiftRight(tree.GetRoot()->GetLeftNode()->GetLeftNode());
+	tree.Display(tree.GetRoot()); cout << "\n";
 }

@@ -5,24 +5,25 @@ using std::cout;
 
 BinarySearchTree::BinarySearchTree()
 {
-	head = nullptr;
+	root = nullptr;
 	size = 0;
 }
 
 BinarySearchTree::~BinarySearchTree()
 {
-	DeleteTree(head);
+	DeleteTree(root);
 }
 
 void BinarySearchTree::Insert(int data)
 {
-	if (head == nullptr)
+	if (root == nullptr)
 	{
-		head = new Node(data);
+		root = new Node(data);
 		size = 1;
 		return;
 	}
-	Node* ref = head;
+
+	Node* ref = root;
 	Node* refParent;
 	do
 	{
@@ -61,6 +62,7 @@ void BinarySearchTree::DeleteTree(Node* ref)
 
 void BinarySearchTree::Display(Node* ref)
 {
+	CalculateDepth(root);
 	if (ref != nullptr)
 	{
 		if (ref->GetLeftNode() != nullptr)
@@ -70,7 +72,7 @@ void BinarySearchTree::Display(Node* ref)
 			if (ref->GetRightNode()->GetParent() != ref)
 				cout << "\nERROR: Parent mismatch!\n";
 
-		cout << ref->GetData() << ", ";
+		cout << ref->GetData() << " at depth " << ref->GetDepth() << ", ";
 		Display(ref->GetLeftNode());
 		Display(ref->GetRightNode());
 	}
@@ -78,7 +80,7 @@ void BinarySearchTree::Display(Node* ref)
 
 void BinarySearchTree::ShiftLeft(Node* ref)
 {
-	if (head == ref)
+	if (root == ref)
 	{
 		return;
 	}
@@ -95,9 +97,9 @@ void BinarySearchTree::ShiftLeft(Node* ref)
 			grandParent->SetRightNode(ref);
 	}
 
-	if (parent == head)
+	if (parent == root)
 	{
-		head = ref;
+		root = ref;
 	}
 
 	parent->SetRightNode(child);
@@ -110,7 +112,7 @@ void BinarySearchTree::ShiftLeft(Node* ref)
 
 void BinarySearchTree::ShiftRight(Node* ref)
 {
-	if (head == ref)
+	if (root == ref)
 	{
 		return;
 	}
@@ -127,9 +129,9 @@ void BinarySearchTree::ShiftRight(Node* ref)
 			grandParent->SetRightNode(ref);
 	}
 
-	if (parent == head)
+	if (parent == root)
 	{
-		head = ref;
+		root = ref;
 	}
 
 	parent->SetLeftNode(child);
@@ -139,4 +141,34 @@ void BinarySearchTree::ShiftRight(Node* ref)
 	parent->SetParent(ref);
 	if (child != nullptr)
 		child->SetParent(parent);
+}
+
+void BinarySearchTree::CalculateDepth(Node* ref)
+{
+	if (ref != nullptr)
+	{
+		if (ref->GetLeftNode() == nullptr && ref->GetRightNode() == nullptr)
+		{
+			ref->SetDepth(0);
+		}
+		else if (ref->GetLeftNode() == nullptr)
+		{
+			CalculateDepth(ref->GetRightNode());
+			ref->SetDepth(ref->GetRightNode()->GetDepth() + 1);
+		}
+		else if (ref->GetRightNode() == nullptr)
+		{
+			CalculateDepth(ref->GetLeftNode());
+			ref->SetDepth(ref->GetLeftNode()->GetDepth() + 1);
+		}
+		else
+		{
+			CalculateDepth(ref->GetLeftNode());
+			CalculateDepth(ref->GetRightNode());
+			if (ref->GetLeftNode()->GetDepth() > ref->GetRightNode()->GetDepth())
+				ref->SetDepth(ref->GetLeftNode()->GetDepth() + 1);
+			else
+				ref->SetDepth(ref->GetRightNode()->GetDepth() + 1);
+		}
+	}
 }
