@@ -1,5 +1,6 @@
 #include "Tree.h"
 #include <iostream>
+
 using std::cout;
 
 BinarySearchTree::BinarySearchTree()
@@ -13,7 +14,7 @@ BinarySearchTree::~BinarySearchTree()
 	DeleteTree(head);
 }
 
-	void BinarySearchTree::Insert(int data)
+void BinarySearchTree::Insert(int data)
 {
 	if (head == nullptr)
 	{
@@ -47,6 +48,7 @@ BinarySearchTree::~BinarySearchTree()
 	}
 	size++;
 }
+
 void BinarySearchTree::DeleteTree(Node* ref)
 {
 	if (ref != nullptr)
@@ -57,7 +59,7 @@ void BinarySearchTree::DeleteTree(Node* ref)
 	}
 }
 
-	void BinarySearchTree::Display(Node* ref)
+void BinarySearchTree::Display(Node* ref)
 {
 	if (ref != nullptr)
 	{
@@ -112,7 +114,6 @@ void BinarySearchTree::ShiftRight(Node* ref)
 	{
 		return;
 	}
-
 
 	Node* parent = ref->GetParent();
 	Node* child = ref->GetRightNode();
