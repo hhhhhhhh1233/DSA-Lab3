@@ -1,4 +1,7 @@
-tree: Main.cpp Tree.cpp Tree.h
-	g++ Main.cpp Tree.cpp Tree.h -o BinarySearchTree
+BinarySearchTree: Main.cpp Tree.cpp Tree.h
+	g++ Main.cpp Tree.cpp -o BinarySearchTree
 test: BinarySearchTree
-	./BinarySearchTree
+	@./BinarySearchTree
+
+show: BinarySearchTree
+	@./BinarySearchTree | dot -Tpng | display

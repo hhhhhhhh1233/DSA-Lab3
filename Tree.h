@@ -44,6 +44,7 @@ public:
 	void Insert(int data);
 	void DeleteTree(Node* ref);
 	void Display(Node* ref);
+	void DisplayDot(Node* ref, const char *);
 	void ShiftLeft(Node* ref);
 	void ShiftRight(Node* ref);
 	void CalculateDepth(Node* ref);

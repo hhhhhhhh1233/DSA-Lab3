@@ -82,6 +82,24 @@ void BinarySearchTree::Display(Node* ref)
 	}
 }
 
+void BinarySearchTree::DisplayDot(Node* ref, const char* prefix)
+{
+	if (ref != nullptr)
+	{
+		if (ref->GetLeftNode() != nullptr)
+			if (ref->GetLeftNode()->GetParent() != ref)
+				cout << "ERROR: Parent mismatch! " << ref->GetData() << " is not parented to " << ref->GetLeftNode()->GetData() << "\n";
+		if (ref->GetRightNode() != nullptr)
+			if (ref->GetRightNode()->GetParent() != ref)
+				cout << "ERROR: Parent mismatch! " << ref->GetData() << " is not parented to " << ref->GetRightNode()->GetData() << "\n";
+		if (ref->GetParent() != nullptr) {
+			cout << "  \"" << prefix << ref->GetParent()->GetData() << "\" ->  \"" << prefix << ref->GetData() << "\";\n";
+		}
+		DisplayDot(ref->GetLeftNode(), prefix);
+		DisplayDot(ref->GetRightNode(), prefix);
+	}
+}
+
 void BinarySearchTree::ShiftLeft(Node* ref)
 {
 	if (root == ref)

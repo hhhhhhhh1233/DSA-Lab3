@@ -12,13 +12,20 @@ int main()
 		tree.Insert(i);
 	}
 
-	tree.Display(tree.GetRoot()); cout << "\n";
+	cout << "digraph test { \n";
+
+	tree.DisplayDot(tree.GetRoot(),"I "); cout << "\n";
 
 	tree.ShiftLeft(tree.GetRoot()->GetRightNode());
+	tree.DisplayDot(tree.GetRoot(),"1 "); cout << "\n";
 	tree.ShiftLeft(tree.GetRoot()->GetRightNode());
+	tree.DisplayDot(tree.GetRoot(),"2 "); cout << "\n";
 	tree.ShiftLeft(tree.GetRoot()->GetRightNode());
+	tree.DisplayDot(tree.GetRoot(),"3 "); cout << "\n";
 	tree.ShiftRight(tree.GetRoot()->GetLeftNode()->GetLeftNode());
+	tree.DisplayDot(tree.GetRoot(),"4 "); cout << "\n";
 	tree.ShiftLeft(tree.GetRoot()->GetRightNode()->GetRightNode());
-	
-	tree.Display(tree.GetRoot()); cout << "\n";
+
+	tree.DisplayDot(tree.GetRoot(), "F "); cout << "\n";
+	cout << "}";
 }
