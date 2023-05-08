@@ -4,7 +4,7 @@ class Node
 {
 private:
 	int data;
-	int depth;
+	int height;
 	int size;
 	Node* left;
 	Node* right;
@@ -16,15 +16,15 @@ public:
 		left = nullptr;
 		right = nullptr;
 		parent = nullptr;
-		depth = 0;
+		height = 0;
 		size = 1;
 	}
 	int GetSize() { return size; }
 	void SetSize(int newSize) { size = newSize; }
 	int GetData() { return data; }
 	void SetData(int val) { data = val; }
-	int GetDepth() { return depth; }
-	void SetDepth(int newDepth) { depth = newDepth; }
+	int GetHeight() { return height; }
+	void SetHeight(int newDepth) { height = newDepth; }
 	Node* GetRightNode() { return right; }
 	void SetRightNode(Node* newRight) { right = newRight; }
 	Node* GetLeftNode() { return left; }
@@ -41,7 +41,7 @@ public:
 	Node* GetRoot() { return root; }
 	BinarySearchTree();
 	~BinarySearchTree();
-	void Insert(int data);
+	Node* Insert(int data);
 	void DeleteTree(Node* ref);
 	void Display(Node* ref);
 	void DisplayDot(Node* ref, const char *);
@@ -49,4 +49,7 @@ public:
 	void ShiftRight(Node* ref);
 	void CalculateDepth(Node* ref);
 	void CalculateSize(Node* ref);
+	void GetKeysInTree(Node* ref, int* arr, int& count);
+	Node* GeneratePerfectTree(int arr[], int begin, int end);
+	void RegenerateSubTree(Node* ref);
 };

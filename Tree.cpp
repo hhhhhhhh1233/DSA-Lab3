@@ -13,13 +13,15 @@ BinarySearchTree::~BinarySearchTree()
 	DeleteTree(root);
 }
 
-void BinarySearchTree::Insert(int data)
+Node* BinarySearchTree::Insert(int data)
 {
 	if (root == nullptr)
 	{
 		root = new Node(data);
-		return;
+		return root;
 	}
+
+	Node* newNode = new Node(data);
 
 	Node* ref = root;
 	Node* refParent;
@@ -38,25 +40,28 @@ void BinarySearchTree::Insert(int data)
 		else
 		{
 			cout << "WARNING: Key " << data << " already exists in tree!\n";
-			return;
+			return ref;
 		}
 	} while (ref != nullptr);
 	if (data > refParent->GetData())
 	{
-		refParent->SetRightNode(new Node(data));
+		refParent->SetRightNode(newNode);
 		refParent->GetRightNode()->SetParent(refParent);
 	}
 	else if (data < refParent->GetData())
 	{
-		refParent->SetLeftNode(new Node(data));
+		refParent->SetLeftNode(newNode);
 		refParent->GetLeftNode()->SetParent(refParent);
 	}
 	CalculateDepth(root);
 	CalculateSize(root);
+	return newNode;
 }
 
 void BinarySearchTree::DeleteTree(Node* ref)
 {
+	if (ref == root)
+		root = nullptr;
 	if (ref != nullptr)
 	{
 		DeleteTree(ref->GetLeftNode());
@@ -76,8 +81,11 @@ void BinarySearchTree::Display(Node* ref)
 			if (ref->GetRightNode()->GetParent() != ref)
 				cout << "ERROR: Parent mismatch! " << ref->GetData() << " is not parented to " << ref->GetRightNode()->GetData() << "\n"; 
 
-		cout << "Key " << ref->GetData() << " at depth " << ref->GetDepth() << " with size " << ref->GetSize() << ", \n";
 		Display(ref->GetLeftNode());
+		if (ref == root)
+			cout << "Key " << ref->GetData() << " at height " << ref->GetHeight() << " with size " << ref->GetSize() << " parented to nullptr" << ", \n";
+		else
+			cout << "Key " << ref->GetData() << " at height " << ref->GetHeight() << " with size " << ref->GetSize() << " parented to " << ref->GetParent()->GetData() << ", \n";
 		Display(ref->GetRightNode());
 	}
 }
@@ -192,26 +200,26 @@ void BinarySearchTree::CalculateDepth(Node* ref)
 	{
 		if (ref->GetLeftNode() == nullptr && ref->GetRightNode() == nullptr)
 		{
-			ref->SetDepth(0);
+			ref->SetHeight(0);
 		}
 		else if (ref->GetLeftNode() == nullptr)
 		{
 			CalculateDepth(ref->GetRightNode());
-			ref->SetDepth(ref->GetRightNode()->GetDepth() + 1);
+			ref->SetHeight(ref->GetRightNode()->GetHeight() + 1);
 		}
 		else if (ref->GetRightNode() == nullptr)
 		{
 			CalculateDepth(ref->GetLeftNode());
-			ref->SetDepth(ref->GetLeftNode()->GetDepth() + 1);
+			ref->SetHeight(ref->GetLeftNode()->GetHeight() + 1);
 		}
 		else
 		{
 			CalculateDepth(ref->GetLeftNode());
 			CalculateDepth(ref->GetRightNode());
-			if (ref->GetLeftNode()->GetDepth() > ref->GetRightNode()->GetDepth())
-				ref->SetDepth(ref->GetLeftNode()->GetDepth() + 1);
+			if (ref->GetLeftNode()->GetHeight() > ref->GetRightNode()->GetHeight())
+				ref->SetHeight(ref->GetLeftNode()->GetHeight() + 1);
 			else
-				ref->SetDepth(ref->GetRightNode()->GetDepth() + 1);
+				ref->SetHeight(ref->GetRightNode()->GetHeight() + 1);
 		}
 	}
 }
@@ -241,4 +249,59 @@ void BinarySearchTree::CalculateSize(Node* ref)
 			ref->SetSize(ref->GetLeftNode()->GetSize() + ref->GetRightNode()->GetSize() + 1);
 		}
 	}
+}
+
+void BinarySearchTree::GetKeysInTree(Node* ref, int* arr, int& count)
+{
+	if (ref != nullptr)
+	{
+		GetKeysInTree(ref->GetLeftNode(), arr, count);
+		arr[count] = ref->GetData();
+		count++;
+		/*for (int i = 0;; i++)
+		{
+			if (arr[i] == NULL)
+			{
+				arr[i] = ref->GetData();
+				break;
+			}
+		}*/
+		GetKeysInTree(ref->GetRightNode(), arr, count);
+	}
+}
+
+Node* BinarySearchTree::GeneratePerfectTree(int arr[], int begin, int end)
+{
+	if (end - begin == 0)
+	{
+		return Insert(arr[begin]);
+	}
+	if (end - begin == 1)
+	{
+		Node* ba = Insert(arr[begin]);
+		Insert(arr[end]);
+		return ba;
+	}
+	int median = (begin + end) / 2;
+	
+	Node* ba = Insert(arr[median]);
+	GeneratePerfectTree(arr, begin, median - 1);
+	GeneratePerfectTree(arr, median + 1, end);
+	return ba;
+}
+
+void BinarySearchTree::RegenerateSubTree(Node* ref)
+{
+	int size = ref->GetSize();
+	int* arr = new int[size] {NULL};
+	int counter = 0;
+
+	GetKeysInTree(ref, arr, counter);
+	if (ref->GetParent() != nullptr)
+		if (ref->GetParent()->GetRightNode() == ref)
+			ref->GetParent()->SetRightNode(nullptr);
+		else if (ref->GetParent()->GetLeftNode() == ref)
+			ref->GetParent()->SetLeftNode(nullptr);
+	DeleteTree(ref);
+	GeneratePerfectTree(arr, 0, size - 1);
 }
