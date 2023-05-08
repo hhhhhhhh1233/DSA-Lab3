@@ -258,14 +258,6 @@ void BinarySearchTree::GetKeysInTree(Node* ref, int* arr, int& count)
 		GetKeysInTree(ref->GetLeftNode(), arr, count);
 		arr[count] = ref->GetData();
 		count++;
-		/*for (int i = 0;; i++)
-		{
-			if (arr[i] == NULL)
-			{
-				arr[i] = ref->GetData();
-				break;
-			}
-		}*/
 		GetKeysInTree(ref->GetRightNode(), arr, count);
 	}
 }
@@ -282,6 +274,7 @@ Node* BinarySearchTree::GeneratePerfectTree(int arr[], int begin, int end)
 		Insert(arr[end]);
 		return ba;
 	}
+
 	int median = (begin + end) / 2;
 	
 	Node* ba = Insert(arr[median]);
@@ -297,11 +290,13 @@ void BinarySearchTree::RegenerateSubTree(Node* ref)
 	int counter = 0;
 
 	GetKeysInTree(ref, arr, counter);
+	
 	if (ref->GetParent() != nullptr)
 		if (ref->GetParent()->GetRightNode() == ref)
 			ref->GetParent()->SetRightNode(nullptr);
 		else if (ref->GetParent()->GetLeftNode() == ref)
 			ref->GetParent()->SetLeftNode(nullptr);
+	
 	DeleteTree(ref);
 	GeneratePerfectTree(arr, 0, size - 1);
 }
