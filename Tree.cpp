@@ -58,6 +58,48 @@ Node* BinarySearchTree::Insert(int data)
 	return newNode;
 }
 
+Node* BinarySearchTree::MaintainedInsert(int data)
+{
+	Node* ref = Insert(data);
+	float c = 0.55f;
+
+	while (ref != nullptr)
+	{
+		if (ref->GetLeftNode() != nullptr)
+			if (ref->GetLeftNode()->GetSize() > c * ref->GetSize())
+			{
+				RegenerateSubTree(ref);
+				break;
+			}
+		if (ref->GetRightNode() != nullptr)
+			if (ref->GetRightNode()->GetSize() > c * ref->GetSize())
+			{
+				RegenerateSubTree(ref);
+				break;
+			}
+		ref = ref->GetParent();
+	}
+
+	return Search(data);
+}
+
+Node *BinarySearchTree::Search(int data)
+{
+    Node* ref = root;
+	while (ref->GetData() != data)
+	{
+		if (data > ref->GetData())
+		{
+			ref = ref->GetRightNode();
+		}
+		if (data < ref->GetData())
+		{
+			ref = ref->GetLeftNode();
+		}
+	}
+	return ref;
+}
+
 void BinarySearchTree::DeleteTree(Node* ref)
 {
 	if (ref == root)

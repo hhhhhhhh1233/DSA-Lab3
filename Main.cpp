@@ -9,15 +9,15 @@ int main()
 
 	for (int i = -5; i < 10; i++)
 	{
-		tree.Insert(i);
+		tree.MaintainedInsert(i);
 	}
 	cout << "digraph test { \n";
-	tree.DisplayDot(tree.GetRoot(), "I "); cout << "\n";
+	tree.DisplayDot(tree.GetRoot(), "M "); cout << "\n";
 	//tree.Display(tree.GetRoot());
 
 	tree.RegenerateSubTree(tree.GetRoot());
 
-	tree.DisplayDot(tree.GetRoot(), "F "); cout << "\n";
+	tree.DisplayDot(tree.GetRoot(), "P "); cout << "\n";
 	cout << "}";
 
 	////cout << "digraph test { \n";
