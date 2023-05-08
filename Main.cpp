@@ -7,16 +7,18 @@ int main()
 {
 	BinarySearchTree tree;
 
-	for (int i = -5; i < 5; i++)
+	for (int i = -5; i < 10; i++)
 	{
 		tree.Insert(i);
 	}
-	tree.Display(tree.GetRoot());
+	cout << "digraph test { \n";
+	tree.DisplayDot(tree.GetRoot(), "I "); cout << "\n";
+	//tree.Display(tree.GetRoot());
 
-	tree.RegenerateSubTree(tree.GetRoot()->GetRightNode());
+	tree.RegenerateSubTree(tree.GetRoot());
 
-	cout << "\n";
-	tree.Display(tree.GetRoot());
+	tree.DisplayDot(tree.GetRoot(), "F "); cout << "\n";
+	cout << "}";
 
 	////cout << "digraph test { \n";
 	//tree.Display(tree.GetRoot());

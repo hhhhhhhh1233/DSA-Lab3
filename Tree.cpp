@@ -286,7 +286,7 @@ Node* BinarySearchTree::GeneratePerfectTree(int arr[], int begin, int end)
 void BinarySearchTree::RegenerateSubTree(Node* ref)
 {
 	int size = ref->GetSize();
-	int* arr = new int[size] {NULL};
+	int* arr = new int[size] {0};
 	int counter = 0;
 
 	GetKeysInTree(ref, arr, counter);
