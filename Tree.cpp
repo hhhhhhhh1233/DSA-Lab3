@@ -39,7 +39,6 @@ Node* BinarySearchTree::Insert(int data)
 		}
 		else
 		{
-			cout << "WARNING: Key " << data << " already exists in tree!\n";
 			return ref;
 		}
 	} while (ref != nullptr);
