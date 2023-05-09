@@ -23,7 +23,7 @@ int main()
 	}
 
 	int x = 0;
-	for (float j = 0.5f; j < 1; j += 0.05f)
+	for (float j = 0.55f; j < 1; j += 0.05f)
 	{
 		for (int i = 0; i < sizeof(nums) / sizeof(nums[0]); i++)
 		{
