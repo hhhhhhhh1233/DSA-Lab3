@@ -7,45 +7,39 @@ using std::cout;
 
 int main()
 {
+	srand(time(0));
 	BinarySearchTree tree;
 	std::string nme[] = {"a ","b ","c ","d ","e ","f ","g ","h ","i ","j ","k ", "l ", "m ", "n ", "o "};
 
-	cout << "digraph test { \n";
-	srand(time(0));
+	int nums[100];
 
-	for (int i = 0; i < 15; i++)
+	//cout << "digraph test { \n";
+
+	
+	for (int i = 0; i < sizeof(nums)/sizeof(nums[0]); i++)
 	{
-		tree.MaintainedInsert(rand()%100);
-		tree.DisplayDot(tree.GetRoot(), nme[i]);
+		nums[i] = rand() % 100;
+		//tree.DisplayDot(tree.GetRoot(), nme[i]);
 	}
-	tree.DisplayDot(tree.GetRoot(), "M "); cout << "\n";
-	//tree.Display(tree.GetRoot());
 
-	tree.RegenerateSubTree(tree.GetRoot());
+	int x = 0;
+	for (float j = 0.5f; j < 1; j += 0.05f)
+	{
+		for (int i = 0; i < sizeof(nums) / sizeof(nums[0]); i++)
+		{
+			tree.MaintainedInsert(nums[i], j);
+		}
+		//tree.Display(tree.GetRoot()); cout << "\n";
+		tree.DisplayDot(tree.GetRoot(), nme[x]);
+		tree.DeleteTree(tree.GetRoot());
+		x++;
+	}
 
-	tree.DisplayDot(tree.GetRoot(), "P "); cout << "\n";
-	cout << "}";
 
-	////cout << "digraph test { \n";
-	//tree.Display(tree.GetRoot());
-	////tree.DisplayDot(tree.GetRoot(),"I "); cout << "\n";
+	//tree.DisplayDot(tree.GetRoot(), "M "); cout << "\n";
 
-	//tree.ShiftLeft(tree.GetRoot()->GetRightNode());
-	////tree.DisplayDot(tree.GetRoot(),"1 "); cout << "\n";
-	//tree.ShiftLeft(tree.GetRoot()->GetRightNode());
+	//tree.RegenerateSubTree(tree.GetRoot());
 
-	//cout << "\n";
-	//tree.Display(tree.GetRoot());
-
-	////tree.DisplayDot(tree.GetRoot(),"2 "); cout << "\n";
-	//tree.ShiftLeft(tree.GetRoot()->GetRightNode());
-	////tree.DisplayDot(tree.GetRoot(),"3 "); cout << "\n";
-	//tree.ShiftRight(tree.GetRoot()->GetLeftNode()->GetLeftNode());
-	////tree.DisplayDot(tree.GetRoot(),"4 "); cout << "\n";
-	//tree.ShiftLeft(tree.GetRoot()->GetRightNode()->GetRightNode());
-	//cout << "\n";
-	//tree.Display(tree.GetRoot());
-
-	////tree.DisplayDot(tree.GetRoot(), "F "); cout << "\n";
-	////cout << "}";
+	//tree.DisplayDot(tree.GetRoot(), "P "); cout << "\n";
+	//cout << "}";
 }

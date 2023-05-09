@@ -57,10 +57,9 @@ Node* BinarySearchTree::Insert(int data)
 	return newNode;
 }
 
-Node* BinarySearchTree::MaintainedInsert(int data)
+Node* BinarySearchTree::MaintainedInsert(int data, float c)
 {
 	Node* insertedNode = Insert(data);
-	float c = 0.55f;
 	
 	Node* ref = root;
 

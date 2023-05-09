@@ -44,7 +44,7 @@ public:
 	BinarySearchTree();
 	~BinarySearchTree();
 	Node* Insert(int data);
-	Node* MaintainedInsert(int data);
+	Node* MaintainedInsert(int data, float c);
 	Node* Search(int data);
 	void DeleteTree(Node* ref);
 	void Display(Node* ref);
