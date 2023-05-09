@@ -60,10 +60,12 @@ Node* BinarySearchTree::Insert(int data)
 
 Node* BinarySearchTree::MaintainedInsert(int data)
 {
-	Node* ref = Insert(data);
+	Node* insertedNode = Insert(data);
 	float c = 0.55f;
+	
+	Node* ref = root;
 
-	while (ref != nullptr)
+	while (ref != insertedNode)
 	{
 		if (ref->GetLeftNode() != nullptr)
 			if (ref->GetLeftNode()->GetSize() > c * ref->GetSize())
@@ -77,8 +79,28 @@ Node* BinarySearchTree::MaintainedInsert(int data)
 				RegenerateSubTree(ref);
 				break;
 			}
-		ref = ref->GetParent();
+		if (data > ref->GetData())
+			ref = ref->GetRightNode();
+		if (data < ref->GetData())
+			ref = ref->GetLeftNode();
 	}
+	
+	// while (ref != nullptr)
+	// {
+	// 	if (ref->GetLeftNode() != nullptr)
+	// 		if (ref->GetLeftNode()->GetSize() > c * ref->GetSize())
+	// 		{
+	// 			RegenerateSubTree(ref);
+	// 			break;
+	// 		}
+	// 	if (ref->GetRightNode() != nullptr)
+	// 		if (ref->GetRightNode()->GetSize() > c * ref->GetSize())
+	// 		{
+	// 			RegenerateSubTree(ref);
+	// 			break;
+	// 		}
+	// 	ref = ref->GetParent();
+	// }
 
 	return Search(data);
 }
@@ -132,7 +154,7 @@ void BinarySearchTree::Display(Node* ref)
 	}
 }
 
-void BinarySearchTree::DisplayDot(Node* ref, const char* prefix)
+void BinarySearchTree::DisplayDot(Node* ref, std::string prefix)
 {
 	if (ref != nullptr)
 	{

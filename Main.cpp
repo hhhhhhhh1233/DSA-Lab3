@@ -1,17 +1,23 @@
 #include <iostream>
 #include "Tree.h"
+#include <string>
+#include <random>
 
 using std::cout;
 
 int main()
 {
 	BinarySearchTree tree;
+	std::string nme[] = {"a ","b ","c ","d ","e ","f ","g ","h ","i ","j ","k ", "l ", "m ", "n ", "o "};
 
-	for (int i = -5; i < 10; i++)
-	{
-		tree.MaintainedInsert(i);
-	}
 	cout << "digraph test { \n";
+	srand(time(0));
+
+	for (int i = 0; i < 15; i++)
+	{
+		tree.MaintainedInsert(rand()%100);
+		tree.DisplayDot(tree.GetRoot(), nme[i]);
+	}
 	tree.DisplayDot(tree.GetRoot(), "M "); cout << "\n";
 	//tree.Display(tree.GetRoot());
 
