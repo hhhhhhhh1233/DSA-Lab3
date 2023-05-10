@@ -27,11 +27,11 @@ Node* BinarySearchTree::Insert(int data)
 	Node* refParent;
 	do
 	{
-		ref->SetSize(ref->GetSize() + 1);
 		refParent = ref;
 		if (data > ref->GetData())
 		{
 			ref = ref->GetRightNode();
+			
 		}
 		else if (data < ref->GetData())
 		{
@@ -52,8 +52,15 @@ Node* BinarySearchTree::Insert(int data)
 		refParent->SetLeftNode(newNode);
 		refParent->GetLeftNode()->SetParent(refParent);
 	}
-	CalculateDepth(root);
-	CalculateSize(root);
+	ref = newNode;
+	while (ref != root)
+	{
+		ref = ref->GetParent();
+		ref->SetSize(ref->GetSize() + 1);
+	}
+	// CalculateDepth(root);
+	// CalculateSize(root);
+
 	return newNode;
 }
 
@@ -132,6 +139,26 @@ void BinarySearchTree::DeleteTree(Node* ref)
 	}
 }
 
+void BinarySearchTree::DeleteSubTree(Node* ref)
+{
+	Node* it = ref;
+	if (ref->GetParent() != nullptr)
+	{
+		if (ref->GetParent()->GetRightNode() != nullptr)
+			if (ref->GetParent()->GetRightNode() == ref)
+				ref->GetParent()->SetRightNode(nullptr);
+		if (ref->GetParent()->GetLeftNode() != nullptr)
+			if (ref->GetParent()->GetLeftNode() == ref)
+				ref->GetParent()->SetLeftNode(nullptr);
+	}
+	while (it != root)
+	{
+		it->GetParent()->SetSize(it->GetParent()->GetSize() - it->GetSize());
+		it = it->GetParent();
+	}
+	DeleteTree(ref);
+}
+
 void BinarySearchTree::Display(Node* ref)
 {
 	if (ref != nullptr)
@@ -163,7 +190,7 @@ void BinarySearchTree::DisplayDot(Node* ref, std::string prefix)
 			if (ref->GetRightNode()->GetParent() != ref)
 				cout << "ERROR: Parent mismatch! " << ref->GetData() << " is not parented to " << ref->GetRightNode()->GetData() << "\n";
 		if (ref->GetParent() != nullptr) {
-			cout << "  \"" << prefix << ref->GetParent()->GetData() << "\" ->  \"" << prefix << ref->GetData() << "\";\n";
+			cout << "  \"" << prefix << ref->GetParent()->GetData() << ", size: " << ref->GetParent()->GetSize() << "\" ->  \"" << prefix << ref->GetData() << ", size: " << ref->GetSize() << "\";\n";
 		}
 		DisplayDot(ref->GetLeftNode(), prefix);
 		DisplayDot(ref->GetRightNode(), prefix);
@@ -359,6 +386,7 @@ void BinarySearchTree::RegenerateSubTree(Node* ref)
 		else if (ref->GetParent()->GetLeftNode() == ref)
 			ref->GetParent()->SetLeftNode(nullptr);
 	
-	DeleteTree(ref);
+	DeleteSubTree(ref);
 	GeneratePerfectTree(arr, 0, size - 1);
+	delete arr;
 }

@@ -47,6 +47,7 @@ public:
 	Node* MaintainedInsert(int data, float c);
 	Node* Search(int data);
 	void DeleteTree(Node* ref);
+	void DeleteSubTree(Node* ref);
 	void Display(Node* ref);
 	void DisplayDot(Node* ref, std::string);
 	void ShiftLeft(Node* ref);
