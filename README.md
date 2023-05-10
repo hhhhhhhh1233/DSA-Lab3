@@ -26,3 +26,5 @@ for i in range(15):
 
 PerfectTree(testArr)
 ```
+## From test with 200 000 elements in tree
+![Screenshot from 2023-05-10 07-17-47](https://github.com/hhhhhhhh1233/DSA-Lab3/assets/58606478/c81842d4-c016-49b5-a4b7-e86474c09089)
