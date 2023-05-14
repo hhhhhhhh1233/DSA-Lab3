@@ -11,7 +11,7 @@ int main()
 {
 	srand(time(0));
 	BinarySearchTree tree;
-	cout << "digraph test { \n";
+	// cout << "digraph test { \n";
 
 	// for (int i = 0; i < 15; i++)
 	// {
@@ -30,24 +30,25 @@ int main()
 	// cout << "}";
 	std::string nme[] = {"a ","b ","c ","d ","e ","f ","g ","h ","i ","j ","k ", "l ", "m ", "n ", "o "};
 
-	int nums[2000000];
+	int size = 40000000;
+	int* nums = new int[size];
 
 	//cout << "digraph test { \n";
 
 	
-	for (int i = 0; i < sizeof(nums)/sizeof(nums[0]); i++)
+	for (int i = 0; i < size; i++)
 	{
-		nums[i] = rand() % 1000000;
+		nums[i] = rand() % 100000000;
 		//tree.DisplayDot(tree.GetRoot(), nme[i]);
 	}
 
-	cout << "DONE GEN\n";
+	cout << "DONE GENERATING " << size << " ELEMENTS\n";
 
 	int x = 0;
 	for (float j = 0.55f; j < 1; j += 0.05f)
 	{
 		auto begin = std::chrono::steady_clock::now();
-		for (int i = 0; i < sizeof(nums) / sizeof(nums[0]); i++)
+		for (int i = 0; i < size; i++)
 		{
 			tree.MaintainedInsert(nums[i], j);
 		}
@@ -60,19 +61,20 @@ int main()
 		for (int i = 0; i < 100; i++)
 		{
 			begin = std::chrono::steady_clock::now();
-			tree.Search(nums[i * ((sizeof(nums)/sizeof(nums[0]))/100)]);
+			tree.Search(nums[i * (size/100)]);
 			end = std::chrono::steady_clock::now();
 			duration = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
 			totalTime += duration;
 		}
 		auto loopEnd = std::chrono::steady_clock::now();
 		auto loopDuration = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() / 1000000.0;
-		cout << ", Average search time: " << totalTime/100 << " microseconds, with a total time of " << totalTime << " microseconds for all searches, with " << loopDuration << " seconds for the loop\n";
+		cout << ", Average search time: " << totalTime/100 << " microseconds\n";
 		//tree.Display(tree.GetRoot()); cout << "\n";
 		//tree.DisplayDot(tree.GetRoot(), nme[x]);
 		tree.DeleteTree(tree.GetRoot());
 		x++;
 	}
+	delete nums;
 
 
 	//tree.DisplayDot(tree.GetRoot(), "M "); cout << "\n";

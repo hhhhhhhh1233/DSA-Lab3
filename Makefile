@@ -1,5 +1,5 @@
 BinarySearchTree: Main.cpp Tree.cpp Tree.h
-	g++ Main.cpp Tree.cpp -o BinarySearchTree
+	@g++ -o3 Main.cpp Tree.cpp -o BinarySearchTree
 test: BinarySearchTree
 	@./BinarySearchTree
 
