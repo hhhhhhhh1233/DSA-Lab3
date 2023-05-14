@@ -141,7 +141,6 @@ void BinarySearchTree::DeleteTree(Node* ref)
 
 void BinarySearchTree::DeleteSubTree(Node* ref)
 {
-	Node* it = ref;
 	if (ref->GetParent() != nullptr)
 	{
 		if (ref->GetParent()->GetRightNode() != nullptr)
@@ -151,9 +150,12 @@ void BinarySearchTree::DeleteSubTree(Node* ref)
 			if (ref->GetParent()->GetLeftNode() == ref)
 				ref->GetParent()->SetLeftNode(nullptr);
 	}
-	while (it != root)
+	Node* it = ref->GetParent();
+	int size = ref->GetSize();
+	while (it != nullptr)
 	{
-		it->GetParent()->SetSize(it->GetParent()->GetSize() - it->GetSize());
+		//cout << it->GetData() << " gets size " << (it->GetSize() - size) << "\n";
+		it->SetSize(it->GetSize() - size);
 		it = it->GetParent();
 	}
 	DeleteTree(ref);
@@ -375,6 +377,15 @@ Node* BinarySearchTree::GeneratePerfectTree(int arr[], int begin, int end)
 void BinarySearchTree::RegenerateSubTree(Node* ref)
 {
 	int size = ref->GetSize();
+	if (size != NodeSize(ref))
+	{
+		//cout << size << " != " << NodeSize(ref) << "\n";
+		DisplayDot(root, "I ");
+		cout << "}";
+		exit(0);
+	}
+
+	//int size = ref->GetSize();
 	int* arr = new int[size] {0};
 	int counter = 0;
 
@@ -389,4 +400,24 @@ void BinarySearchTree::RegenerateSubTree(Node* ref)
 	DeleteSubTree(ref);
 	GeneratePerfectTree(arr, 0, size - 1);
 	delete arr;
+}
+
+int BinarySearchTree::NodeSize(Node* ref)
+{
+	if (ref != nullptr)
+	{
+		return NodeSize(ref->GetLeftNode()) + NodeSize(ref->GetRightNode()) + 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+bool BinarySearchTree::VerifySize(Node* ref)
+{
+	if (ref == nullptr)
+		return true;
+
+	return VerifySize(ref->GetLeftNode()) && VerifySize(ref->GetRightNode()) && ref->GetSize() == NodeSize(ref); 
 }

@@ -54,6 +54,8 @@ public:
 	void ShiftRight(Node* ref);
 	void CalculateDepth(Node* ref);
 	void CalculateSize(Node* ref);
+	int NodeSize(Node* ref);
+	bool VerifySize(Node* ref);
 	void GetKeysInTree(Node* ref, int* arr, int& count);
 	Node* GeneratePerfectTree(int arr[], int begin, int end);
 	void RegenerateSubTree(Node* ref);
