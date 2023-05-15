@@ -38,7 +38,7 @@ public:
 class BinarySearchTree
 {
 private:
-	Node* root;
+	Node* root = nullptr;
 public:
 	Node* GetRoot() { return root; }
 	BinarySearchTree();
@@ -52,7 +52,7 @@ public:
 	void DisplayDot(Node* ref, std::string);
 	void ShiftLeft(Node* ref);
 	void ShiftRight(Node* ref);
-	void CalculateDepth(Node* ref);
+	void CalculateHeight(Node* ref);
 	void CalculateSize(Node* ref);
 	int NodeSize(Node* ref);
 	bool VerifySize(Node* ref);
