@@ -10,7 +10,6 @@ BinarySearchTree::BinarySearchTree()
 
 BinarySearchTree::~BinarySearchTree()
 {
-	cout << "CALLED DESTRUCTOR!\n";
 	DeleteTree(root);
 }
 
@@ -40,6 +39,7 @@ Node* BinarySearchTree::Insert(int data)
 		}
 		else
 		{
+			delete newNode;
 			return ref;
 		}
 	} while (ref != nullptr);
