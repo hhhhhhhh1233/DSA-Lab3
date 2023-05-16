@@ -5,3 +5,6 @@ test: BinarySearchTree
 
 show: BinarySearchTree
 	@./BinarySearchTree | dot -Tpng | display
+
+graph: test
+	python graphTime.py 
